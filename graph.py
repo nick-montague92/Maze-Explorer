@@ -14,6 +14,28 @@ class Graph:
   def explore(self):
     print("Exploring the graph....\n")
     #FILL IN EXPLORE METHOD BELOW
+    current_room = 'entrance' 
+    path_total = 0
+    print("\nStarting off at the {a}\n".format(a=current_room))
+    while (current_room != 'treasure room'):
+      node = self.graph_dict[current_room]
+      for connected_room, weight in node.edges.items():
+        key = connected_room[:1]
+        print("enter {a} for {b}: {c} cost".format(a=key, b=connected_room, c=weight))
+      valid_choices = [room[:1] for room in node.edges.keys()]
+      print("\nYou have accumulated: {a} cost".format(a=path_total))
+      choice = input("\nWhich room do you move to? ")
+      if (choice not in valid_choices):
+        print("please select from these letters: {a}".format(a=valid_choices))
+      else:
+        for room in node.edges.keys():
+          if choice.startswith(room[:1]):
+            current_room = room
+            path_total += node.edges[room]
+        print("\n*** You have chosen: {a} ***\n".format(a=current_room))
+    print("Made it to the treasure room with {a} cost".format(a=path_total))
+            
+        
     
   
   def print_map(self):
